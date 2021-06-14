@@ -8,10 +8,10 @@ const ADD_TODO = "ADD_TODO";
 const DELETE_TODO = "DELETE_TODO";
 
 const reducer = (state = [], action) => {
-  console.log(action);
   switch (action.type) {
     case ADD_TODO:
-      return [];
+      // 이전의 state를 담고(...state), 새로운 state를 담음
+      return [...state, { text: action.text }];
     case DELETE_TODO:
       return [];
     default:
@@ -20,6 +20,8 @@ const reducer = (state = [], action) => {
 };
 
 const store = createStore(reducer);
+
+store.subscribe(() => console.log(store.getState()));
 
 const onSubmit = (e) => {
   e.preventDefault();
