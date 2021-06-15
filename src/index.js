@@ -24,10 +24,11 @@ const deleteToDo = (id) => {
 const reducer = (state = [], action) => {
   switch (action.type) {
     case ADD_TODO:
-      // ... 는 펼침 연산자로 배열 또는 객체의 모든 값을 복사 할 수 있음
       return [{ text: action.text, id: Date.now() }, ...state];
     case DELETE_TODO:
-      return [];
+      // state를 mutate(추가, 수정) 하면 안되므로 새로운 배열을 생성하는 filter를 이용함
+      // toDo의 id와 action을 통해 받은 id가 같다는 것은 삭제 요청을 받았다는 것과 같음
+      return state.filter((toDo) => toDo.id !== action.id);
     default:
       return state;
   }
@@ -42,7 +43,8 @@ const dispatchAddToDo = (text) => {
 };
 
 const dispatchDeleteToDo = (e) => {
-  const id = e.target.parentNode.id;
+  // react로 부터 받아오는 id는 문자열이므로 Int로 변환
+  const id = parseInt(e.target.parentNode.id);
   store.dispatch(deleteToDo(id));
 };
 
