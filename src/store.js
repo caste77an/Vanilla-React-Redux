@@ -1,28 +1,19 @@
 import { createStore } from "redux";
+import { createAction } from "@reduxjs/toolkit";
 
-const ADD = "ADD";
-const DELETE = "DELETE";
-
-const addToDo = (text) => {
-  return {
-    type: ADD,
-    text,
-  };
-};
-
-const deleteToDo = (id) => {
-  return {
-    type: DELETE,
-    id: parseInt(id),
-  };
-};
+// createAction은 type, payload라는 객체를 가짐
+// type에는 ADD, payload에는 이용자로부터 전달받은 데이터가 담김
+const addToDo = createAction("ADD");
+const deleteToDo = createAction("DELETE");
 
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case ADD:
-      return [{ text: action.text, id: Date.now() }, ...state];
-    case DELETE:
-      return state.filter((toDo) => toDo.id !== action.id);
+    case addToDo.type:
+      // addToDo 시 전달받은 text가 action.payload에 담김
+      return [{ text: action.payload, id: Date.now() }, ...state];
+    case deleteToDo.type:
+      // deleteToDo 시 전달받은 id가 action.payload에 담김
+      return state.filter((toDo) => toDo.id !== action.payload);
     default:
       return state;
   }
