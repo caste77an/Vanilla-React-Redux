@@ -1,23 +1,10 @@
 import { createStore } from "redux";
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer, configureStore } from "@reduxjs/toolkit";
 
 // createAction은 type, payload라는 객체를 가짐
 // type에는 ADD, payload에는 이용자로부터 전달받은 데이터가 담김
 const addToDo = createAction("ADD");
 const deleteToDo = createAction("DELETE");
-
-// const reducer = (state = [], action) => {
-//   switch (action.type) {
-//     case addToDo.type:
-//       // addToDo 시 전달받은 text가 action.payload에 담김
-//       return [{ text: action.payload, id: Date.now() }, ...state];
-//     case deleteToDo.type:
-//       // deleteToDo 시 전달받은 id가 action.payload에 담김
-//       return state.filter((toDo) => toDo.id !== action.payload);
-//     default:
-//       return state;
-//   }
-// };
 
 // const add = () => { state.push() } 는 return 없는 void 함수
 // const add = () => state.filter() 는 state.filter()가 return 처리됨
@@ -31,7 +18,8 @@ const reducer = createReducer([], {
     state.filter((toDo) => toDo.id !== action.payload),
 });
 
-const store = createStore(reducer);
+// createStore 대신 configureStore로 사용 가능 (devTools, middleware와 같은 설정 가능함)
+const store = configureStore({ reducer });
 
 export const actionCreators = {
   addToDo,
