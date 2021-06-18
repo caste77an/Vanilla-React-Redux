@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { actionCreators } from "../store";
+import { add } from "../store";
 import ToDo from "../components/ToDo";
 
 function Home({ toDos, addToDo }) {
@@ -38,7 +38,7 @@ function mapStateToProps(state) {
 // store.dispatch()와 같은 역할을 하며, text를 받아와 addToDo(text)를 dispatch 함
 function mapDispatchToProps(dispatch) {
   return {
-    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+    addToDo: (text) => dispatch(add(text)),
   };
 }
 
